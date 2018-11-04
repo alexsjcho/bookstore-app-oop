@@ -15,8 +15,28 @@ class Account:
         with open(self.filepath, 'w') as file:
             file.write(str(self.balance))
 
-account = Account("account//balance.txt")
-print(account.balance)
-account.withdraw(100)
-print(account.balance)
-account.commit()
+class Checking(Account):
+    """This class gneerates checking account objects"""
+    type="checking"
+
+    def __init__(self, filepath, fee):
+        Account.__init__(self, filepath)
+        self.fee=fee
+
+    def transfer(self, amount):
+        self.balance=self.balance - amount - self.fee
+
+jacks_checking=Checking("account\\jacks.txt", 1)
+jacks_checking.transfer(110)
+print(jacks_checking.balance)
+jacks_checking.commit()
+print(jacks_checking.type)
+
+
+johns_checking=Checking("account\\johns.txt", 1)
+johns_checking.transfer(110)
+print(johns_checking.balance)
+johns_checking.commit()
+print(johns_checking.type)
+
+print(johns_checking.__doc__)
