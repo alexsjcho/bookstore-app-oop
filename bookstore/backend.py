@@ -22,8 +22,7 @@ class Database:
 
     def search(self, title="",author="",year="",isbn=""):
         self.cur.execute("SELECT * FROM book WHERE title=? OR author=? OR year=? OR isbn=?", (title,author,year,isbn))
-        self.rows=cur.fetchall()
-        self.conn.close()
+        rows=self.cur.fetchall()
         return rows
 
     def delete(self, id):
@@ -33,6 +32,9 @@ class Database:
     def update(self,id,title,author,year,isbn):
         self.cur.execute("UPDATE book SET title=?, author=?, year=?, isbn=? WHERE id=?",(title,author,year,isbn,id))
         self.conn.commit()
+
+    def __del__(self):
+        self.conn.close()
 
 
     #insert("The Sun","John Smith",1918,913123132)
